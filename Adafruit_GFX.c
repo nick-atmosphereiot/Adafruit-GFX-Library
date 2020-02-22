@@ -62,7 +62,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define pgm_read_pointer(addr) ((void *)pgm_read_word(addr))
 #endif
 
-inline GFXglyph *pgm_read_glyph_ptr( const GFXfont *gfxFont, uint8_t c )
+GFXglyph *pgm_read_glyph_ptr( const GFXfont *gfxFont, uint8_t c )
 {
 #ifdef __AVR__
 	return &( ( ( GFXglyph * )pgm_read_pointer( &gfxFont->glyph ) )[c] );
@@ -75,7 +75,7 @@ inline GFXglyph *pgm_read_glyph_ptr( const GFXfont *gfxFont, uint8_t c )
 #endif //__AVR__
 }
 
-inline uint8_t *pgm_read_bitmap_ptr( const GFXfont *gfxFont )
+uint8_t *pgm_read_bitmap_ptr( const GFXfont *gfxFont )
 {
 #ifdef __AVR__
 	return ( uint8_t * )pgm_read_pointer( &gfxFont->bitmap );
@@ -1260,7 +1260,7 @@ size_t Adafruit_GFX_Write( Adafruit_GFX_Driver_t *driver, uint8_t c )
 				cursor_y += textsize_y * 8; // advance y one line
 			}
 
-			Adafruit_GFX_DrawChar( driver, cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
+			Adafruit_GFX_DrawCharAdv( driver, cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
 			                       textsize_y );
 			cursor_x += textsize_x * 6; // Advance x one char
 		}
@@ -1296,7 +1296,7 @@ size_t Adafruit_GFX_Write( Adafruit_GFX_Driver_t *driver, uint8_t c )
 						            ( uint8_t )pgm_read_byte( &gfxFont->yAdvance );
 					}
 
-					Adafruit_GFX_DrawChar( driver, cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
+					Adafruit_GFX_DrawCharAdv( driver, cursor_x, cursor_y, c, textcolor, textbgcolor, textsize_x,
 					                       textsize_y );
 				}
 
